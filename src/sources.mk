@@ -24,6 +24,12 @@ aSOURCES =\
 	 main.c
 
 endif
+SOURCES =\
+	 ./interrupts_msp432p401r_gcc.c\
+	 ./system_msp432p401r.c\
+	 ./startup_msp432p401r_gcc.c\
+	 ./memory.c\
+	 ./main.c
 
 # Add your include paths to this variable
 INCLUDES = \
