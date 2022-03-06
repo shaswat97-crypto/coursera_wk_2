@@ -37,22 +37,22 @@ CFLAGS = -Wall -Werror -O0 -g -std=c99
 CPPFLAGS = -E
 	#pattern matching target for binary(object) files
 %.o : %.c
-	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) -c -MD $< -o $@
 	
 %.i : %.c
-	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) $(CPPFLAGS) $< -o $@
+	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) $(CPPFLAGS) -MD $< -o $@
 
 %.asm : %.c
-	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) -S $< -o $@
+	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) -S -MD $< -o $@
 
 .PHONY : compile-all
 compile-all : $(aSOURCES:.c=.o)
 %.o : $(aSOURCES)
-	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) -c -MD $< -o $@
 
 .PHONY : Build
 Build : $(aSOURCES)
-	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) $(aSOURCES) $(LDFLAGS) -o $(TARGET)
+	$(CC) -D$(PLATFORM) $(CFLAGS) $(INCLUDES) $(aSOURCES) -MD $(LDFLAGS) -o $(TARGET)
 
 else
 
@@ -74,25 +74,25 @@ CFLAGS = -mcpu=$(CPU) -march=$(ARCH) --specs=$(SPECS) -Wall -g -std=c99 -Werror 
 
 #Pattern matching  target
 %.i : %.c
-	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -E $< -o $@
+	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -MD -E $< -o $@
 %.asm : %.c
-	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -S $< -o $@
+	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -MD -S $< -o $@
 %.o : %.c
-	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -c $< -o $@
+	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -MD -c $< -o $@
 
 .PHONY: compile-all
 compile-all : $(aSOURCES:.c=.o)
 %.o : $(aSOURCES)
-	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -c $< -o $@
+	$(CC) $(LINKER_FILE) -D$(PLATFORM) $(INCLUDES) $(CFLAGS) -MD -c $< -o $@
 
 .PHONY: Build
 Build : $(aSOURCES)
-	$(CC) $(INCLUDES) $(LINKER_FILE) -D$(PLATFORM) $(CFLAGS) $(aSOURCES) -o $(Target)
+	$(CC) $(INCLUDES) $(LINKER_FILE) -D$(PLATFORM) $(CFLAGS) -MD $(aSOURCES) -o $(Target)
 endif
 
 .PHONY : clean
 clean :
-	rm -f $(aSOURCES:.c=.o)  $(aSOURCES:.c=.i) $(aSOURCES:.c=.asm) $(Target) $(Basename).map $(Basename).out
+	rm -f *.o *.i *.asm *.map *.out *.d
 # Architectures Specific Flags
 #LINKER_FILE = 
 #CPU = 
