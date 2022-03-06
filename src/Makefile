@@ -69,7 +69,7 @@ SPECS = nosys.specs
 # Compiler Flags and Defines
 CC = arm-none-eabi-gcc
 LD = arm-none-eabi-ld
-LDFLAGS = -Wl, -Map=$(Basename).map
+LDFLAGS = -Wl,-Map=$(Basename).map
 CFLAGS = -mcpu=$(CPU) -march=$(ARCH) --specs=$(SPECS) -Wall -g -std=c99 -Werror -O0
 
 #Pattern matching  target
@@ -87,7 +87,7 @@ compile-all : $(aSOURCES:.c=.o)
 
 .PHONY: Build
 Build : $(aSOURCES)
-	$(CC) $(INCLUDES) $(LINKER_FILE) -D$(PLATFORM) $(CFLAGS) -MD $(aSOURCES) -o $(Target)
+	$(CC) $(INCLUDES) $(LINKER_FILE) -D$(PLATFORM) $(CFLAGS) $(LDFLAGS) -MD $(aSOURCES) -o $(Target)
 endif
 
 .PHONY : clean
