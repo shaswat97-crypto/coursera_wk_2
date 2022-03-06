@@ -25,7 +25,7 @@ include sources.mk
 
 # Platform Overrides
 PLATFORM =
-Basename = FinalBuild
+Basename = c1m2
 TARGET = $(Basename).out
 
 ifeq ($(PLATFORM),HOST)
@@ -57,7 +57,7 @@ Build : $(aSOURCES)
 else
 
 #Target
-Basename = FinalBuild
+Basename = c1m2
 Target = $(Basename).out
 
 # Architectures Specific Flags
@@ -93,16 +93,3 @@ endif
 .PHONY : clean
 clean :
 	rm -f *.o *.i *.asm *.map *.out *.d
-# Architectures Specific Flags
-#LINKER_FILE = 
-#CPU = 
-#ARCH = 
-#SPECS = 
-
-# Compiler Flags and Defines
-#CC = gcc
-#LD = 
-#LDFLAGS = 
-#CFLAGS = 
-#CPPFLAGs = -E
-
